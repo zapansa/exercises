@@ -6,14 +6,32 @@
 int main()
 {
   int military_time = 0;
-  std::cout << "Please enter the time in military time: ";
-  std::cin >> military_time;
+  std::cout << "\n[C++ Excercise 1 - Military to Standard time]\n\n";
+  std::string inp_exit; 
 
-  // TODO: Call your function to convert from military time to regular time
-  // and assign its result to regular_time.
+  while(true){
+    while (true)
+    {
+      std::cout << "--------\n";
+      std::cout << "Please enter the time in military time: ";
+      std::cin >> military_time;
 
-  std::string regular_time = MilitaryToRegularTime(military_time);
+      if (military_time > 2459)
+      {
+        std::cout << "Incorrect input. Try again.\n\n";
+      }
+      else
+        break;
+    }
 
-  std::cout << "The equivalent regular time is: " << regular_time << "\n";
+    std::string regular_time = MilitaryToRegularTime(military_time);
+    std::cout << "The equivalent regular time is: " << regular_time << "\n\n";
+
+    std::cout << "Exit? (Y/N): ";
+    std::cin >> inp_exit;
+    if(inp_exit == "y"){
+      break;
+    }
+  }
   return 0;
 }

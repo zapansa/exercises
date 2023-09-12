@@ -24,20 +24,31 @@ std::string MilitaryToRegularTime(int military_time) {
 
   // get the last two digits of input - minutes
   int minute = military_time % 100;
-
   
-  // convert hour 
-  if (hour > 12) {
-    if (hour == 24){
-      b_AM = true;
-    } else b_AM = false; 
+  /* Note 1: midnight 2400 vs 0000
+     24 hour time midnight is presented as both 2400 and 0000 in military and emergency 
+     if we do not handle that some people are going to type eg. 2430 vs eg. 0030 and 
+     mean the same thing, then the output is going to be different. 
+
+     it is gonna be handled here :) as well as conversion
+
+     otherwise the input 0030 will be presented as 00:30 AM in standard time. 
+  */
+  if (hour > 12){ // it is 1pm to 12am, 1300 to 2400
+    if (hour == 24){ // it is midnight
+      b_AM = true; // hence AM
+    } else {
+      b_AM = false; // otherwise it isnt midnight <11PM hence PM
+    }
     hour = hour - 12;
-  } else if (hour == 12)
-  {
+  } else if (hour == 12){
     hour = 12;
     b_AM = false;
-  }
-  
+  } else if (hour == 0){ // see Note 1*
+    hour = 12;   // it is midnight
+    b_AM = true; // it is AM
+  } 
+
   // int to string conversion
   std::string s_hour = std::to_string(hour);
   std::string s_minute = std::to_string(minute);
