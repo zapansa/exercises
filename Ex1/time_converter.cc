@@ -30,7 +30,7 @@ std::string MilitaryToRegularTime(int military_time) {
      if we do not handle that some people are going to type eg. 2430 vs eg. 0030 and 
      mean the same thing, then the output is going to be different. 
 
-     it is gonna be handled here :) as well as conversion
+     it is gonna be handled here as well as conversion
 
      otherwise the input 0030 will be presented as 00:30 AM in standard time. 
   */
