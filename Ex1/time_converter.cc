@@ -42,8 +42,8 @@ std::string MilitaryToRegularTime(int military_time) {
     }
     hour = hour - 12;
   } else if (hour == 12){
-    hour = 12;
-    b_AM = false;
+    hour = 12; // it is 12 noon
+    b_AM = false; // it is PM
   } else if (hour == 0){ // see Note 1*
     hour = 12;   // it is midnight
     b_AM = true; // it is AM
