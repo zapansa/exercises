@@ -25,10 +25,13 @@ std::string MilitaryToRegularTime(int military_time) {
   // get the last two digits of input - minutes
   int minute = military_time % 100;
 
+  
   // convert hour 
   if (hour > 12) {
+    if (hour == 24){
+      b_AM = true;
+    } else b_AM = false; 
     hour = hour - 12;
-    b_AM = false;
   } else if (hour == 12)
   {
     hour = 12;
