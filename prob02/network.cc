@@ -12,6 +12,7 @@
 #include <iostream>
 #include <vector>
 #include "network.h"
+#include "phone.h"
 
 void Network::AddPhone(std::shared_ptr<Phone> phoneptr) {
     // Reference the object from pointer
@@ -27,8 +28,27 @@ void Network::AddPhone(std::shared_ptr<Phone> phoneptr) {
 }
 
 void Network::SendMessage(std::shared_ptr<Message> msgptr, const std::string recip) {
-    
+    // Check if recipient exists in the network 
+    if (phonebook_.count(recip) > 0){
+        Phone phone; 
+        phone.AcceptMessage(msgptr);
+    }
+    else {
+        // Does not exist, print an error
+    }
 }
 
 void Network::SendMessage(std::shared_ptr<Message> msgptr, const std::vector<std::string> list_recip) {
+    // check the list of every recipient
+    for (std::string recip : list_recip){    
+        // Check if recipient exists in the network
+        if (phonebook_.count(recip) > 0){
+            Phone phone;
+            phone.AcceptMessage(msgptr);
+        }
+        else{
+            // Does not exist, print an error
+        }
+    }
+
 }
