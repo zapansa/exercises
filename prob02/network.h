@@ -13,16 +13,19 @@
 
 #include <map>
 #include <memory>
+#include <map>
+#include <vector>
 
 #include "message.h"
 #include "phone.h"
 
+
 class Network {
-  // ======================= YOUR CODE HERE =======================
-  // Write the Network class here. Refer to the README for the member
-  // variables, constructors, and member functions needed.
-  //
-  // If you were the "driver" for the Phone class, then switch roles
-  // with your lab partner and act as the "navigator" for this class.
-  // ===============================================================
+  public:
+    void AddPhone(std::shared_ptr<Phone> phoneptr);
+    void SendMessage(std::shared_ptr<Message> msgptr, const std::string recip);
+    void SendMessage(std::shared_ptr<Message> msgptr, const std::vector<std::string> list_recip);
+
+  private: 
+    std::map<std::string, std::shared_ptr<Phone>> phonebook_; 
 };

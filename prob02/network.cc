@@ -9,14 +9,26 @@
 // If it is a pair programming lab please specify partner below.
 // Partner: @peteranteater
 
-// ========================= YOUR CODE HERE =========================
-// This implementation file (network.cc) is where you should implement
-// the member functions declared in the header (network.h), only
-// if you didn't implement them inline within network.h.
-//
-// Remember to specify the name of the class with :: in this format:
-//     <return type> MyClassName::MyFunction() {
-//        ...
-//     }
-// to tell the compiler that each function belongs to the Network class.
-// ===================================================================
+#include <iostream>
+#include <vector>
+#include "network.h"
+
+void Network::AddPhone(std::shared_ptr<Phone> phoneptr) {
+    // Reference the object from pointer
+    Phone phoneobj = *phoneptr;
+
+    // Insert the referenced object into the phonebook 
+    /* NOTE: 
+        Emplace - Constructs, whereas 
+        Insert - Copies 
+    */
+    // phonebook_.emplace(phoneobj.GetOwner(), phoneptr);
+    phonebook_.insert({phoneobj.GetOwner(), phoneptr});
+}
+
+void Network::SendMessage(std::shared_ptr<Message> msgptr, const std::string recip) {
+    
+}
+
+void Network::SendMessage(std::shared_ptr<Message> msgptr, const std::vector<std::string> list_recip) {
+}
