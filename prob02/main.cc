@@ -1,11 +1,3 @@
-// Christian Siquian
-// CPSC 121L-01
-// 10/07/23
-// chrissiquian@csu.fullerton.edu
-// chrissiquian
-//
-// Lab 9-2
-
 #include <iostream>
 #include <memory>
 #include <vector>
