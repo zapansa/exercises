@@ -23,6 +23,9 @@ class Network {
     // Send Message Function - Overload - List recipients - void return
     void SendMessage(std::shared_ptr<Message> msgptr, const std::vector<std::string> list_recip);
 
+    // ***Not to be included in assignment - inline 
+    std::map<std::string, std::shared_ptr<Phone>> getPhonebook() {return phonebook_;}
+
   private: 
     std::map<std::string, std::shared_ptr<Phone>> phonebook_; 
 };

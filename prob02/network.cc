@@ -52,8 +52,7 @@ void Network::SendMessage(std::shared_ptr<Message> msgptr, const std::vector<std
     for (std::string recip : list_recip){    
         // Check if recipient exists in the network
         if (phonebook_.count(recip) > 0){
-            Phone recip_phone = *phonebook_.at(recip);
-            recip_phone.AcceptMessage(msgptr);
+            phonebook_.at(recip)->AcceptMessage(msgptr);
         }
         else{
             std::cout << "Cannot send the message: " << msgptr->GetMessage() << "\n";
