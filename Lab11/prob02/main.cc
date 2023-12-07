@@ -40,13 +40,11 @@ int main() {
   //    If IsTrainFull returns false, print
   //          "The train has available seats."
   // ======================================================  
-  bool trainFull = locomotive->IsTrainFull();
-  if(trainFull == 1) // true -> 1
+  if (locomotive->IsTrainFull() == 1)  // true -> 1
   {
     // Trains are full
     std::cout << "The train is full.";
-  }
-  else // false -> 0
+  } else  // false -> 0
   {
     std::cout << "The train is not full.";
   }
@@ -60,13 +58,14 @@ int main() {
   //    75, and next carriage to `nullptr`.
   // ======================================================
   std::shared_ptr<Train> caboose = std::make_shared<Train>(40, 75, nullptr);
-  locomotive->AddCarriageToEnd(caboose);
-  std::cout << "Adding a new carriage to the train!" << std::endl;
+
 
   // =================== YOUR CODE HERE ===================
   // 5. Using `AddCarriageToEnd`, add the new Train you've
   //    created in #4 to the end of the `locomotive`.
   // ======================================================
+  locomotive->AddCarriageToEnd(caboose);
+  std::cout << "Adding a new carriage to the train!" << std::endl;
 
   // =================== YOUR CODE HERE ===================
   // 6. Using IsTrainFull, check if the locomotive is full.
@@ -75,6 +74,15 @@ int main() {
   //    If IsTrainFull returns false, print
   //          "The train now has available seats."
   // ======================================================
+  if (locomotive->IsTrainFull() == 1)  // true -> 1
+  {
+    // Trains are full
+    std::cout << "The train is full.";
+  } else  // false -> 0
+  {
+    std::cout << "The train is not full.";
+  }
+  std::cout << std::endl;
   std::cout << std::endl;
   return 0;
 }
