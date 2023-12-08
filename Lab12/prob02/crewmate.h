@@ -18,11 +18,11 @@ class Crewmate : public Astronaut
 
 
         // isAlive Stuff
-        bool GetIsAlive(); 
+        bool GetIsAlive() const; 
         bool SetIsAlive(bool isAlive_); 
 
         // Task Stuff
-        int GetTaskCount();
+        int GetTaskCount() const;
         void DoTask(std::string task_name);
 
         // overrides

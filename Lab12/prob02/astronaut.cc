@@ -4,18 +4,18 @@ Astronaut::Astronaut(std::string astro_name, graphics::Color astro_color)
     : astro_name(astro_name), astro_color(astro_color)
 {}
 
-const std::string Astronaut::GetName()
+ std::string Astronaut::GetName() const
 {
     // return astronaut string
     return astro_name;
 }
 
-const graphics::Color Astronaut::GetColor() 
+graphics::Color Astronaut::GetColor() const  
 {
     return astro_color;
 }
 
-const std::string Astronaut::GetIconFilename()
+std::string Astronaut::GetIconFilename() const
 {
     // Returm filename of icon to draw
     return "astronaut.bmp";

@@ -9,9 +9,9 @@ class Astronaut
 {
     public: 
         Astronaut(std::string astro_name, graphics::Color astro_color); 
-        std::string const GetName();
-        virtual graphics::Color const GetColor();
-        virtual std::string const GetIconFilename();
+        std::string GetName() const;
+        virtual graphics::Color GetColor() const;
+        virtual std::string GetIconFilename() const;
 
     private: 
         std::string astro_name; 

@@ -12,7 +12,7 @@ Crewmate::Crewmate(std::string crew_name, graphics::Color crew_color)
 {}
 
 /* isAlive Getters, setters */
-bool Crewmate::GetIsAlive()
+bool Crewmate::GetIsAlive() const
 {
     return isAlive; 
 }
@@ -23,7 +23,7 @@ bool Crewmate::SetIsAlive(bool isAlive_)
 }
 
 /* Crewmate task stuff */ 
-int Crewmate::GetTaskCount()
+int Crewmate::GetTaskCount() const
 {
     return taskCount;
 }

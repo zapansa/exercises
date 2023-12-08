@@ -6,7 +6,7 @@
 #ifndef IMPOSTOR_H
 #define IMPOSTOR_H
 
-class Impostor : private Astronaut
+class Impostor : public Astronaut
 {
     public: 
         // Constructor
