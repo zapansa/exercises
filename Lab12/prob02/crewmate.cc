@@ -20,6 +20,7 @@ bool Crewmate::GetIsAlive() const
 bool Crewmate::SetIsAlive(bool isAlive_)
 {
     isAlive = isAlive_;
+    return isAlive;
 }
 
 /* Crewmate task stuff */ 
