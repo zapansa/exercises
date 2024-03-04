@@ -35,13 +35,23 @@ namespace CPSC131::MyVector
 			/// Normal constructor
 			MyVector(size_t capacity = MyVector::DEFAULT_CAPACITY)
 			{
-				int myArray[capacity];
+				size_ = 0; 
+				capacity_ = (capacity < MINIMUM_CAPACITY) ? MINIMUM_CAPACITY : capacity; // Fix
+				elements_ = new T[capacity_];
 			}
 			
 			/// Copy constructor
 			MyVector(const MyVector& other)
 			{
-				int myArray = other.array;
+				// Without the colon initializer list
+				size_ = other.size_; 
+				capacity_ = other.capacity_;
+				elements_ = new T[other.capacity_];
+				
+				for(size_t i = 0; i < size_; ++i) 
+				{
+					elements_[i] = other.elements_[i];
+				}
 			}
 			
 			/**
@@ -50,30 +60,29 @@ namespace CPSC131::MyVector
 			 */
 			~MyVector()
 			{
-				delete[] myArray;
+				clear();
+				delete[] elements_;
 			}
 			
 			/************
 			 * Operators
 			 ************/
 			
-			///	Assignment operator
+			///	Assignment operator TODO ******
 			MyVector& operator=(const MyVector& rhs)
 			{
-				MyVector temp(rhs);
-				swap(*this, temp);
+				if(this != &rhs)
+				{
+					clear();
+					copyOther(rhs);
+				}
 				return *this;
 			}
 			
-			/// Operator overload to at()
+			/// Operator overload to at() TODO ****
 			T& operator[](size_t index) const
 			{
-				if (index >= capacity) {
-					throw std::out_of_range("Index out of range");
-				}
-
-				// TODO: Your code here
-				return *(new T());
+				return at(index);
 			}
 			
 			/************
@@ -83,19 +92,13 @@ namespace CPSC131::MyVector
 			/// Return the number of valid elements in our data
 			size_t size() const
 			{
-				array.size();
-
-				// TODO: Your code here
-				
-				return 0;
+				return size_;
 			}
 			
 			/// Return the capacity of our internal array
 			size_t capacity() const
 			{
-				// TODO: Your code here
-				
-				return 0;
+				return capacity_;
 			}
 			
 			/**
@@ -105,10 +108,10 @@ namespace CPSC131::MyVector
 			 */
 			bool empty() const
 			{
-				if (array.size() == 0) {
+				if (size_ == 0) 
+				{
 					return true;
 				}
-				// TODO: Your code here
 				else
 				return false;
 			}
@@ -116,12 +119,13 @@ namespace CPSC131::MyVector
 			/// Return a reference to the element at an index
 			T& at(size_t index) const
 			{
-				// TODO: Your code here
-				
-				//	erase me
-				return *(new T());
-			}
-			
+				if (index >= size_)
+				{
+					throw std::out_of_range("The index is out of range");
+				}
+				return elements_[index];
+			}		
+
 			/***********
 			 * Mutators
 			 ***********/
@@ -133,7 +137,10 @@ namespace CPSC131::MyVector
 			 */
 			void reserve(size_t capacity)
 			{
-				// TODO: Your code here
+				if (capacity > capacity_)
+				{
+					changeCapacity(capacity);
+				}
 			}
 			
 			/**
@@ -143,10 +150,12 @@ namespace CPSC131::MyVector
 			 */
 			T& set(size_t index, const T& element)
 			{
-				// TODO: Your code here
-				
-				//	erase me
-				return *(new T());
+				if (index >= size_)
+				{
+					throw std::out_of_range("Index is out of range");
+				}
+				elements_[index] = element;
+				return elements_[index]; // flag 
 			}
 			
 			/**
@@ -155,10 +164,17 @@ namespace CPSC131::MyVector
 			 */
 			T& push_back(const T& element)
 			{
-				// TODO: Your code here
-				
-				//	erase me
-				return *(new T());
+				// reserve bc same 
+				if(size_ == capacity_)
+				{
+					reserve(capacity_ * 2);
+					// if (size_ < (capacity_ / 3))
+					// {
+					// 	changeCapacity(capacity_ / 2);
+					// }
+				}
+				elements_[size_++] = element;
+				return elements_[size_-1];
 			}
 			
 			/**
@@ -168,11 +184,23 @@ namespace CPSC131::MyVector
 			 */
 			T pop_back()
 			{
-				// TODO: Your code here
-				
-				//	erase me
-				return *(new T());
-			}
+				if(size_ == 0)
+				{
+					throw std::range_error("The vector is empty");
+				} 
+				else if (size_ == 1)
+				{
+					T poppedElement = elements_[--size_];
+					changeCapacity(MINIMUM_CAPACITY);
+					return poppedElement;
+				}
+				if (size_ < (capacity_/3))
+				{
+					changeCapacity(capacity_/2);
+				}
+				return elements_[--size_];
+			}		
+			
 			
 			/**
 			 * Insert an element at some index in our vector
@@ -186,10 +214,26 @@ namespace CPSC131::MyVector
 			 */
 			T& insert(size_t index, const T& element)
 			{
-				// TODO: Your code here
-				
-				//	erase me
-				return *(new T());
+				if(index > size_)
+				{
+					throw std::out_of_range("The index is out of range.");
+				}
+				if(size_ == capacity_)
+				{
+					reserve(capacity_ * 2);
+					// if(size_ < (capacity_ / 3))
+					// {
+					// 	changeCapacity(capacity_/2);
+					// }
+				}
+				for(size_t i = size_; i > index; --i)
+				{
+					elements_[i] = elements_[i - 1];
+				}
+				elements_[index] = element;
+				++size_; 
+				return elements_[index];
+
 			}
 			
 			/**
@@ -207,10 +251,17 @@ namespace CPSC131::MyVector
 			 */
 			T erase(size_t index)
 			{
-				// TODO: Your code here
-				
-				//	erase me
-				return *(new T());
+				if(index >= size_)
+				{
+					throw std::out_of_range("Index is out of range.");
+				}
+				T erasedElement = elements_[index];
+				for (size_t i = index; i < size_ - 1; ++i)
+				{
+					elements_[i] = elements_[i + 1];
+				}
+				--size_;
+				return erasedElement;
 			}
 			
 			/**
@@ -220,7 +271,8 @@ namespace CPSC131::MyVector
 			*/
 			void clear()
 			{
-				// TODO: Your code here
+				size_ = 0; 
+				capacity_ = 0; 
 			}
 		
 		/**
@@ -228,7 +280,6 @@ namespace CPSC131::MyVector
 		 * You may add your own private helpers here, if you wish.
 		*/
 		private:
-			myArray_ = new T[capacity];
 			/// Number of valid elements currently in our vector
 			size_t size_ = 0;
 			
@@ -247,7 +298,37 @@ namespace CPSC131::MyVector
 			 */
 			void changeCapacity(size_t c)
 			{
-				// TODO: Your code here
+				if(c < size_)
+				{
+					throw std::out_of_range("The new capacity entered is less than the old.");
+				}
+				if(c < MINIMUM_CAPACITY)
+				{
+					c = MINIMUM_CAPACITY;
+				}
+				T* temp = new T[c];
+				for(size_t i = 0; i < size_; ++i)
+				{
+					temp[i] = elements_[i];
+				}
+				delete[] elements_;
+				elements_ = temp;
+				capacity_ = c;
+			}
+
+			/** Helper function 
+			 *  Private member function of the class. Its purpose is to copy the contents of another MyVector object into the
+			 *  current object. Used in the copy constructor and the assignment operator. 
+			 */
+			void copyOther(const MyVector& other)
+			{
+				size_ = other.size_; 
+				capacity_ = other.capacity_;
+				elements_ = new T[capacity_];
+				for(size_t i = 0; i < size_; ++i)
+				{
+					elements_[i] = other.elements_[i];
+				}
 			}
 	};
 
