@@ -438,15 +438,20 @@ namespace CPSC131::DoublyLinkedList
 
 				Node *current = pos.getCursor();
 
+				// debug
+				std::cout << "Position to insert: " << *pos << std::endl;
+
 				// at end of the list 
 				if (pos == end())
 				{
+					std::cout << "Inserting at end" << std::endl;
 					push_back(value);
 					return --end();
 				}
 
 				//create new node
 				Node *newNode = new Node(value);
+				std::cout << "Current node value: " << *current << std::endl;
 
 				//Update pointers 
 				newNode->setNext(current->getNext());
@@ -456,6 +461,7 @@ namespace CPSC131::DoublyLinkedList
 				//update tail 
 				if (newNode->getNext())
 				{
+					std::cout << "Next node after insertion: " << *(newNode->getNext()) << std::endl;
 					newNode->getNext()->setPrevious(newNode);
 				}
 				else
