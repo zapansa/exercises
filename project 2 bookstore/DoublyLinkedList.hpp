@@ -476,9 +476,13 @@ namespace CPSC131::DoublyLinkedList
 			*/
 			Iterator insert_after(size_t pos, const T& value)
 			{
+				if (index >= size_)
+					throw std::out_of_range("Index out of bounds");
+
 				Iterator it = begin();
-				for (size_t i = 0; i < pos && it != end(); ++i, ++it)
-					;
+				for (size_t i = 0; i < index; ++i)
+					++it;
+
 				return insert_after(it, value);
 			}
 
