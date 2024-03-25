@@ -25,12 +25,14 @@ using std::string;
 using CPSC131::BookStore::BookStore, CPSC131::BookStore::Book;
 
 
+
 //	PROTO
 void menuLoop();
 void purchaseInventory();
 void viewInventory();
 void sellToCustomer();
 string getLine();
+CPSC131::DoublyLinkedList::DoublyLinkedList<int> makeList();
 
 //	Globals: Not a great practice, but very good for a lazy professor making starter code :)
 BookStore store;
@@ -40,14 +42,30 @@ BookStore store;
 int main()
 {
 	//
-	menuLoop();
-	
-	//
-	cout << "Program exiting" << endl;
+	//menuLoop();
+
+	auto list = makeList();
+	list.insert_after(7, 119);
+	list.insert_after(13, 181);
 	
 	return 0;
 }
 
+//
+CPSC131::DoublyLinkedList::DoublyLinkedList<int> makeList()
+{
+	//
+	CPSC131::DoublyLinkedList::DoublyLinkedList<int> list;
+
+	//
+	for (size_t i = 0; i < 20; i++)
+	{
+		int value = (i * 3) - 30;
+		list.push_back(value);
+	}
+
+	return list;
+}
 
 //
 void menuLoop()

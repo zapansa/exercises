@@ -435,40 +435,30 @@ namespace CPSC131::DoublyLinkedList
 			 */
 			Iterator insert_after(Iterator pos, const T& value)
 			{
-
-				Node *current = pos.getCursor();
-
-				// debug
-				std::cout << "Position to insert: " << *pos << std::endl;
-
-				// at end of the list 
-				if (pos == end())
+				// Find position to insert new node
+				Iterator it = begin();
+				while (it != end() && it != pos)
 				{
-					std::cout << "Inserting at end" << std::endl;
-					push_back(value);
-					return --end();
+					++it;
 				}
 
-				//create new node
-				Node *newNode = new Node(value);
-				std::cout << "Current node value: " << *current << std::endl;
+				// Throw an exception if the specified position is not found
+				if (it == end())
+				{
+					throw std::invalid_argument("Specified position not found in the list");
+				}
 
-				//Update pointers 
-				newNode->setNext(current->getNext());
-				newNode->setPrevious(current);
+				Node *current = it.getCursor();
+				Node *newNode = new Node(value, current, current->getNext());
 				current->setNext(newNode);
-
-				//update tail 
 				if (newNode->getNext())
 				{
-					std::cout << "Next node after insertion: " << *(newNode->getNext()) << std::endl;
 					newNode->getNext()->setPrevious(newNode);
 				}
 				else
 				{
 					tail_ = newNode;
 				}
-	
 				++size_;
 				return Iterator(head_, tail_, newNode);
 			}
