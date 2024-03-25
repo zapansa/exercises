@@ -435,21 +435,26 @@ namespace CPSC131::DoublyLinkedList
 			 */
 			Iterator insert_after(Iterator pos, const T& value)
 			{
-				if (empty())
+
+				// Find position to insert new node
+				Iterator it = begin();
+				while (it != end() && it != pos)
 				{
-					push_front(value);
-					return begin();
+					++it;
 				}
-				else if (pos == end())
+
+				// if it reaches the end or doesnt match 
+				// insert at the end of the list 
+				if (it == end())
 				{
-					push_back(value);
-					return last();
+					return push_back(value);
 				}
 				else
 				{
-					Node *newNode = new Node(value, pos.getCursor(), pos.getCursor()->getNext());
-					pos.getCursor()->setNext(newNode);
-					if (newNode->getNext() != nullptr)
+					Node *current = it.getCursor();
+					Node *newNode = new Node(value, current, current->getNext());
+					current->setNext(newNode);
+					if (newNode->getNext())
 					{
 						newNode->getNext()->setPrevious(newNode);
 					}
@@ -524,19 +529,36 @@ namespace CPSC131::DoublyLinkedList
 			Iterator push_after(Iterator pos, const T& value)
 			{
 				if (empty())
+				{
 					return push_front(value);
+				}
 				if (pos == end())
+				{
 					return push_back(value);
+				}
 
 				Node *current = pos.getCursor();
-				Node *newNode = new Node(value, current, current->getNext());
-				current->setNext(newNode);
-				if (newNode->getNext())
-					newNode->getNext()->setPrevious(newNode);
-				else
+
+				Node *newNode = new Node(value); // New node with given value
+
+				// update pointers
+				newNode->setNext(current->getNext());
+				newNode->setPrevious(current);
+
+				if (current->getNext()) // check if theres a next node
+				{
+					current->getNext()->setPrevious(newNode);
+				}
+				else // if the current is the tail
+				{
 					tail_ = newNode;
+				}
+
+				current->setNext(newNode);
+				
 				++size_;
-				return Iterator(head_, tail_, newNode->getNext()); // Return Iterator pointing to the new node
+
+				return Iterator(head_, tail_, newNode);
 			}
 			
 			/**
@@ -660,11 +682,19 @@ namespace CPSC131::DoublyLinkedList
 				if (index >= size_)
 					throw std::range_error("Index out of bounds.");
 
-				Node *current = head_;
-				for (size_t i = 0; i < index; ++i)
-					current = current->getNext();
-
-				return current->getElement();
+				if(index < size_ / 2){
+					Node *current = head_;
+					for (size_t i = 0; i < index; ++i)
+						current = current->getNext();
+					return current->getElement();
+				}
+				else // search tail 
+				{
+					Node* current = tail_;
+					for (size_t i = size_ - 1; i > index; --i)
+						current = current->getPrevious();
+					return current->getElement();
+				}
 			}
 			
 			/**
