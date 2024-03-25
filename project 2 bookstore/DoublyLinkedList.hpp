@@ -186,8 +186,10 @@ namespace CPSC131::DoublyLinkedList
 					 */
 					Iterator& operator++()
 					{
-						if (cursor_ != nullptr)
+						if (cursor_)
+						{
 							cursor_ = cursor_->getNext();
+						}
 						return *this;
 					}
 					
@@ -198,8 +200,7 @@ namespace CPSC131::DoublyLinkedList
 					Iterator operator++(int)
 					{
 						Iterator temp = *this;
-						if (cursor_ != nullptr)
-							cursor_ = cursor_->getNext();
+						++(*this);
 						return temp;
 					}
 					
@@ -209,9 +210,13 @@ namespace CPSC131::DoublyLinkedList
 					 */
 					Iterator& operator--()
 					{
-						if (cursor_ != nullptr)
+						if (cursor_)
 						{
 							cursor_ = cursor_->getPrevious();
+						}
+						else
+						{
+							cursor_ = tail_;
 						}
 						return *this;
 					}
@@ -223,10 +228,7 @@ namespace CPSC131::DoublyLinkedList
 					Iterator operator--(int)
 					{
 						Iterator temp = *this;
-						if (cursor_ != nullptr)
-						{
-							cursor_ = cursor_->getPrevious();
-						}
+						--(*this);
 						return temp;
 					}
 					
@@ -290,7 +292,7 @@ namespace CPSC131::DoublyLinkedList
 					 */
 					T& operator*()
 					{
-						if (cursor_ == nullptr)
+						if (!cursor_)
 						{
 							throw std::out_of_range("Iterator is out of range");
 						}
