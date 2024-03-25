@@ -536,7 +536,7 @@ namespace CPSC131::DoublyLinkedList
 				else
 					tail_ = newNode;
 				++size_;
-				return Iterator(head_, tail_, newNode);
+				return Iterator(head_, tail_, newNode->getNext()); // Return Iterator pointing to the new node
 			}
 			
 			/**
