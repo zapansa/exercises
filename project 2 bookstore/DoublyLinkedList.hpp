@@ -476,14 +476,30 @@ namespace CPSC131::DoublyLinkedList
 			*/
 			Iterator insert_after(size_t pos, const T& value)
 			{
-				if (index >= size_)
+				if (pos >= size_)
 					throw std::out_of_range("Index out of bounds");
 
-				Iterator it = begin();
+				Node *current = head_;
 				for (size_t i = 0; i < pos; ++i)
-					++it;
+				{
+					current = current->getNext();
+				}
 
-				return insert_after(it, value);
+				// Now 'current' points to the node at position 'pos'
+				Node *newNode = new Node(value, current, current->getNext());
+				if (current->getNext() != nullptr)
+				{
+					current->getNext()->setPrevious(newNode);
+				}
+				else
+				{
+					tail_ = newNode; // Update the tail if 'current' is the last node
+				}
+				current->setNext(newNode);
+
+				++size_;
+
+				return Iterator(head_, tail_, newNode);
 			}
 
 			/**
