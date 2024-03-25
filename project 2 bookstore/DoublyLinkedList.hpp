@@ -80,8 +80,8 @@ namespace CPSC131::DoublyLinkedList
 					void setElement(T element) { element_ = element; }
 
 					/// Get the element this node holds
-					T& getElement() { return this->element_; }
-					
+					T &getElement() { return element_; }
+
 					/// Return a reference to the element
 					T& operator*() { return this->element_; }
 					
@@ -104,7 +104,7 @@ namespace CPSC131::DoublyLinkedList
 				public:
 					
 					///	Constructor that does nothing; YOUR WELCOME
-					Iterator() head_(nullptr), tail_(nullptr), cursor_(nullptr) {}
+					Iterator() : head_(nullptr), tail_(nullptr), cursor_(nullptr) {}
 
 					///	Constructor taking a head and tail pointer; YOUR WELCOME
 					Iterator(Node* head, Node* tail) : head_(head), tail_(tail)
@@ -187,7 +187,7 @@ namespace CPSC131::DoublyLinkedList
 					Iterator& operator++()
 					{
 						if (cursor_ != nullptr)
-							cursor_ = cursor_->next;
+							cursor_ = cursor_->getNext();
 						return *this;
 					}
 					
@@ -199,9 +199,7 @@ namespace CPSC131::DoublyLinkedList
 					{
 						Iterator temp = *this;
 						if (cursor_ != nullptr)
-						{
 							cursor_ = cursor_->getNext();
-						}
 						return temp;
 					}
 					
@@ -296,7 +294,7 @@ namespace CPSC131::DoublyLinkedList
 						{
 							throw std::out_of_range("Iterator is out of range");
 						}
-						return cursor_->element;
+						return cursor_->getElement();
 					}
 				
 				private:
