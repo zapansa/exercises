@@ -447,7 +447,8 @@ namespace CPSC131::DoublyLinkedList
 				// insert at the end of the list 
 				if (it == end())
 				{
-					return push_back(value);
+					push_back(value);
+					return --end(); // return an iterator pointing to the last node
 				}
 				else
 				{
