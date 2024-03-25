@@ -480,7 +480,7 @@ namespace CPSC131::DoublyLinkedList
 					throw std::out_of_range("Index out of bounds");
 
 				Iterator it = begin();
-				for (size_t i = 0; i < index; ++i)
+				for (size_t i = 0; i < pos; ++i)
 					++it;
 
 				return insert_after(it, value);
