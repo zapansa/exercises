@@ -531,11 +531,13 @@ namespace CPSC131::DoublyLinkedList
 			{
 				if (empty())
 				{
-					return push_front(value);
+					push_front(value);
+					return begin();
 				}
 				if (pos == end())
 				{
-					return push_back(value);
+					push_back(value);
+					return --end();
 				}
 
 				Node *current = pos.getCursor();
