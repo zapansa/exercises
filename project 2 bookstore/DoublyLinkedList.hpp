@@ -435,29 +435,26 @@ namespace CPSC131::DoublyLinkedList
 			 */
 			Iterator insert_after(Iterator pos, const T& value)
 			{
-				if (empty())
+
+				// Find position to insert new node
+				Iterator it = begin();
+				while (it != end() && it != pos)
 				{
-					// If the list is empty, insert the new element as the only element in the list
-					push_back(value);
-					return --end();
+					++it;
 				}
-				else if (pos == end())
+
+				// if it reaches the end or doesnt match 
+				// insert at the end of the list 
+				if (it == end())
 				{
-					// If the position specified by the iterator is at the end of the list, insert the new element at the end
 					push_back(value);
-					return --end();
+					return --end(); // return an iterator pointing to the last node
 				}
 				else
 				{
-					// Insert the new element after the node pointed to by the iterator
-					Node *current = pos.getCursor();
-					Node *newNode = new Node(value);
-
-					// Update pointers
-					newNode->setNext(current->getNext());
-					newNode->setPrevious(current);
+					Node *current = it.getCursor();
+					Node *newNode = new Node(value, current, current->getNext());
 					current->setNext(newNode);
-
 					if (newNode->getNext())
 					{
 						newNode->getNext()->setPrevious(newNode);
@@ -466,7 +463,6 @@ namespace CPSC131::DoublyLinkedList
 					{
 						tail_ = newNode;
 					}
-
 					++size_;
 					return Iterator(head_, tail_, newNode);
 				}
